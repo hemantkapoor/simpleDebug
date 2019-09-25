@@ -39,6 +39,7 @@ public:
 	void setDebugMaskConsole(DebugLevelEnum mask) { m_debugMaskConsole = mask; }
 	void setDebugMaskFile(DebugLevelEnum mask) { m_debugMaskFile = mask; }
 	void log(DebugLevelEnum, const std::string&);
+	void log(DebugLevelEnum, const std::ostream&);
 
 
 

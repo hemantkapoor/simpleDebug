@@ -8,6 +8,7 @@
 #include <fcntl.h>   /* File control definitions */
 #include <errno.h>   /* Error number definitions */
 #include <iostream>
+#include <sstream>
 #include "SimpleDebug.h"
 
 namespace SimpleDebugName {
@@ -52,6 +53,13 @@ void SimpleDebug::log(DebugLevelEnum dbgLvl, const std::string& logData)
 	{
 		m_outStream << str(dbgLvl) << logData << std::endl;
 	}
+}
+
+void SimpleDebug::log(DebugLevelEnum lvl, const std::ostream& logData)
+{
+    std::ostringstream ss;
+    ss << logData.rdbuf();
+    log(lvl,ss);
 }
 
 std::string SimpleDebug::str(DebugLevelEnum lvl) const
