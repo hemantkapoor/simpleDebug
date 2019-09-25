@@ -9,6 +9,7 @@
 #include <errno.h>   /* Error number definitions */
 #include <iostream>
 #include <sstream>
+#include <ctime>
 #include "SimpleDebug.h"
 
 namespace SimpleDebugName {
@@ -35,8 +36,18 @@ bool SimpleDebug::setDebugFile(const std::string& filePath)
 	{
 		m_outStream.close();
 	}
-	m_outStream.open(filePath,std::ofstream::out | std::ostream::trunc);
+	m_outStream.open(filePath,std::ofstream::out | std::ostream::app);
 	m_file =  m_outStream.is_open();
+	if(m_file == true)
+	{
+		//We add System Time as well
+		std::time_t result = std::time(nullptr);
+		m_outStream << "\r\n\r\n\r\n";
+		m_outStream << "*******************************************************************\r\n";
+		m_outStream << "New Log Dated : "<< std::asctime(std::localtime(&result)) << "\r\n";
+		m_outStream << "*******************************************************************\r\n";
+		m_outStream << "\r\n\r\n\r\n";
+	}
 	return m_file;
 }
 
@@ -69,7 +80,7 @@ std::string SimpleDebug::str(DebugLevelEnum lvl) const
 	{
 		case NONE:
 		{
-			retString = "NONE";
+			retString = "";
 			break;
 		}
 		case LOG:
