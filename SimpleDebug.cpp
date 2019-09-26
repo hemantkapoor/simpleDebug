@@ -8,6 +8,7 @@
 #include <fcntl.h>   /* File control definitions */
 #include <errno.h>   /* Error number definitions */
 #include <iostream>
+#include <string>
 #include <sstream>
 #include <ctime>
 #include "SimpleDebug.h"
@@ -70,7 +71,8 @@ void SimpleDebug::log(DebugLevelEnum lvl, const std::ostream& logData)
 {
     std::ostringstream ss;
     ss << logData.rdbuf();
-    log(lvl,ss);
+    std::string logDataString = ss.str();
+    log(lvl,logDataString);
 }
 
 std::string SimpleDebug::str(DebugLevelEnum lvl) const
